@@ -104,22 +104,12 @@ public abstract class BaseTabFragment3 extends BaseFragment {
                     .getSupportFragmentManager()
                     .beginTransaction();
 
-//            for (int i = 0; i < mItemTabList.size(); i++) {
-//                ItemTab itemTab = mItemTabList.get(i);
-//                Fragment fragment = itemTab.getFragment();
-//                if (!fragment.isAdded()) {
-//                    transaction.add(R.id.base_tab_fl, fragment);
-//                }
-//            }
-
             Fragment fragment = getTabList().get(position).getFragment();
 
             if (!fragment.isAdded()) {
                 transaction.add(R.id.base_tab_fl, fragment);
             }
 
-//                        .replace(R.id.base_tab_fl, fragment)
-//                    .add(fragment, fragment.getClass().getName())
             if (mLastFragment != null && !mLastFragment.isHidden()) {
                 transaction.hide(mLastFragment);
             }
