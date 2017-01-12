@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 
 /**
  * --------------------------------------------
@@ -16,7 +16,7 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.B
  * description ：
  * -------------------------------------------
  **/
-public class ScrollFragment extends BaseFragment {
+public class ScrollFragment extends BaseLoadingFragment {
 
     public static ScrollFragment newInstance() {
         Bundle args = new Bundle();

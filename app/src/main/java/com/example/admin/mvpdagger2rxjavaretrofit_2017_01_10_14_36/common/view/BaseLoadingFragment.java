@@ -1,7 +1,21 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view;
 
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.FixedFlipper;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.LoadingLayout;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 描述说明  <br/>
@@ -12,55 +26,116 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class BaseLoadingFragment<T> extends RxFragment implements BaseLoadingStatus<T> {
+public class BaseLoadingFragment<T> extends BaseSwipeRefreshFragment<T> {
+
+    @Bind(R.id.flp)
+    FixedFlipper mFlp;
+    @Bind(R.id.load_transparent_ll)
+    FrameLayout mLoadTransparentLl;
+    @Bind(R.id.load_error_tv)
+    TextView mLoadErrorTv;
+    @Bind(R.id.load_error_ll)
+    LinearLayout mLoadErrorLl;
+    @Bind(R.id.iv_empty)
+    ImageView mIvEmpty;
+    @Bind(R.id.load_empty_ll)
+    LinearLayout mLoadEmptyLl;
+    @Bind(R.id.loading_iv)
+    ImageView mLoadingIv;
+    @Bind(R.id.loading_ll)
+    LinearLayout mLoadingLl;
+    @Bind(R.id.loading_layout)
+    LoadingLayout mLoadingLayout;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = addLoadingView(inflater, container, savedInstanceState);
+        View source = super.onCreateView(inflater, (ViewGroup) view, savedInstanceState);
+        ButterKnife.bind(this, source);
+        return source;
+    }
+
+    private View addLoadingView(LayoutInflater inflater, @Nullable ViewGroup container,
+                                @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.layout_loading, null);
+        mLoadingLayout = (LoadingLayout) view.findViewById(R.id.loading_layout);
+        mLoadingLayout.addView(container, 0);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
 
     @Override
     public void loadData() {
-
+        startLoad();
+        mLoadingLayout.loadData();
     }
 
     @Override
     public void startLoad() {
-
+        loading();
+        mLoadingLayout.startLoad();
     }
 
     @Override
     public void loading() {
-
+        mLoadingLayout.loading();
     }
 
     @Override
     public void success(T data) {
+        mLoadingLayout.success(data);
+        complete();
+    }
+
+    @Override
+    public void empty() {
+        mLoadingLayout.empty();
         complete();
     }
 
     @Override
     public void failure(int code, String msg) {
+        mLoadingLayout.failure(code, msg);
         complete();
     }
 
     @Override
     public void error(String msg) {
+        mLoadingLayout.error(msg);
         complete();
     }
 
     @Override
     public void complete() {
-
+        mLoadingLayout.complete();
     }
 
     @Override
     public void reLoad() {
-
+        mLoadingLayout.reLoad();
+        startLoad();
     }
 
     @Override
     public void offLine() {
-
+        mLoadingLayout.offLine();
     }
 
     @Override
     public void unLogin() {
+        mLoadingLayout.unLogin();
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

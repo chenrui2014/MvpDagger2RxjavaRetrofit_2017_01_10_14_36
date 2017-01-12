@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseActivity;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseTabFragment3;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity {
         return MainFragment.newInstance();
     }
 
-    public static class MainFragment extends RxFragment {
+    public static class MainFragment extends BaseLoadingFragment {
 
         @Bind(R.id.scroll_tab_fl)
         FrameLayout mScrollTabFl;

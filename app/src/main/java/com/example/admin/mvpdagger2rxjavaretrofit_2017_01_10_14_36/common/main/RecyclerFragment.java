@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * description ：
  * -------------------------------------------
  **/
-public class RecyclerFragment extends BaseFragment {
+public class RecyclerFragment extends BaseLoadingFragment {
 
     private View view;
     private RecyclerView recyclerView;

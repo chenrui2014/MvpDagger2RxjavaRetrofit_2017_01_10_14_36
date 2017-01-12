@@ -14,6 +14,7 @@ public interface BaseLoadingStatus<T> extends BaseStatus{
     void startLoad();//开始加载
     void loading();//加载中
     void success(T data);//加载成功
+    void empty();//数据为空
     void failure(int code, String msg);//加载失败
     void error(String msg);//发生错误
     void complete();//加载完成

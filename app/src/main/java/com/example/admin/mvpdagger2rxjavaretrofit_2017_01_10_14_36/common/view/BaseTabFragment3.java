@@ -98,13 +98,13 @@ public abstract class BaseTabFragment3 extends BaseFragment {
 
     private void tabSelected(int position, List<ItemTab> mItemTabList) {
 
-        if (getTabList().size() > position) {
+        if (mItemTabList.size() > position) {
 
             FragmentTransaction transaction = getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction();
 
-            Fragment fragment = getTabList().get(position).getFragment();
+            Fragment fragment = mItemTabList.get(position).getFragment();
 
             if (!fragment.isAdded()) {
                 transaction.add(R.id.base_tab_fl, fragment);
