@@ -27,4 +27,6 @@ public class EmailPresenter<T> extends BaseLoadingPresenter<T> {
         super.success(data);
         mEmailStatus.fillView(data);
     }
+
+
 }
