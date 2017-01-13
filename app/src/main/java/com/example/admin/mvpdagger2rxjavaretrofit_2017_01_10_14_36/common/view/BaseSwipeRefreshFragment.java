@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment;
 
@@ -21,7 +22,24 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public abstract class BaseSwipeRefreshFragment<T> extends RxFragment implements BaseLoadingStatus<T> {
+public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter<T>>
+        extends RxFragment implements BaseLoadingStatus<T> {
+
+    public abstract P getPresenter();
+
+    SwipeRefreshLayout mSrl;
+
+    public SwipeRefreshLayout getSrl() {
+        return mSrl;
+    }
+
+    public void setSrl(SwipeRefreshLayout srl) {
+        mSrl = srl;
+    }
+
+    protected void setSwipeRefreshEnable(SwipeRefreshLayout srl, boolean enable) {
+        srl.setEnabled(enable);
+    }
 
     @Nullable
     @Override
@@ -34,14 +52,15 @@ public abstract class BaseSwipeRefreshFragment<T> extends RxFragment implements 
     private View addSwipeRefreshView (LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
         View swipeView = inflater.inflate(R.layout.layout_swipe_refresh, null);
-        SwipeRefreshLayout srl = (SwipeRefreshLayout) swipeView.findViewById(R.id.srl);
-        srl.addView(container);
-        srl.setOnRefreshListener(new OnRefreshListener() {
+        mSrl = (SwipeRefreshLayout) swipeView.findViewById(R.id.srl);
+        mSrl.addView(container);
+        mSrl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadData();
             }
         });
+        setSwipeRefreshEnable(getSrl(), false);
         return swipeView;
     }
 }

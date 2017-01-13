@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.FixedFlipper;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.LoadingLayout;
 
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class BaseLoadingFragment<T> extends BaseSwipeRefreshFragment<T> {
+public abstract class BaseLoadingFragment<T, P extends BaseLoadingPresenter<T>> extends BaseSwipeRefreshFragment<T, P> {
 
     @Bind(R.id.flp)
     FixedFlipper mFlp;
@@ -54,6 +55,7 @@ public class BaseLoadingFragment<T> extends BaseSwipeRefreshFragment<T> {
         View view = addLoadingView(inflater, container, savedInstanceState);
         View source = super.onCreateView(inflater, (ViewGroup) view, savedInstanceState);
         ButterKnife.bind(this, source);
+        setSwipeRefreshEnable(getSrl(), true);
         return source;
     }
 
@@ -75,62 +77,73 @@ public class BaseLoadingFragment<T> extends BaseSwipeRefreshFragment<T> {
     public void loadData() {
         startLoad();
         mLoadingLayout.loadData();
+        getPresenter().loadData();
     }
 
     @Override
     public void startLoad() {
         loading();
         mLoadingLayout.startLoad();
+        getPresenter().startLoad();
     }
 
     @Override
     public void loading() {
         mLoadingLayout.loading();
+        getPresenter().loading();
     }
 
     @Override
     public void success(T data) {
         mLoadingLayout.success(data);
+        getPresenter().success(data);
         complete();
     }
 
     @Override
     public void empty() {
         mLoadingLayout.empty();
+        getPresenter().empty();
         complete();
     }
 
     @Override
     public void failure(int code, String msg) {
         mLoadingLayout.failure(code, msg);
+        getPresenter().failure(code, msg);
         complete();
     }
 
     @Override
     public void error(String msg) {
         mLoadingLayout.error(msg);
+        getPresenter().error(msg);
         complete();
     }
 
     @Override
     public void complete() {
         mLoadingLayout.complete();
+        getPresenter().complete();
     }
 
     @Override
     public void reLoad() {
         mLoadingLayout.reLoad();
+        getPresenter().reLoad();
         startLoad();
     }
 
     @Override
     public void offLine() {
         mLoadingLayout.offLine();
+        getPresenter().offLine();
     }
 
     @Override
     public void unLogin() {
         mLoadingLayout.unLogin();
+        getPresenter().unLogin();
     }
 
     @Override
