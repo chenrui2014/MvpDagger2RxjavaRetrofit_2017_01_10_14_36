@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 
 /**
@@ -28,6 +29,11 @@ public class ScrollFragment extends BaseLoadingFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public BaseLoadingPresenter getPresenter() {
+        return null;
     }
 
     @Nullable

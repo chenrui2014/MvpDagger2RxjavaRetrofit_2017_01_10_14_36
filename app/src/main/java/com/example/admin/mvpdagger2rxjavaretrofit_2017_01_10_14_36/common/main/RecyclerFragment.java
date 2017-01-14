@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 
 import java.util.ArrayList;
@@ -35,6 +36,11 @@ public class RecyclerFragment extends BaseLoadingFragment {
         RecyclerFragment fragment = new RecyclerFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public BaseLoadingPresenter getPresenter() {
+        return null;
     }
 
     @Nullable

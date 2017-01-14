@@ -1,4 +1,4 @@
-package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.main;
+package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,9 +11,15 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.main.RecyclerFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.main.ScrollFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseActivity;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseTabFragment3;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.module.LoginModule;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.presenter.LoginPresenter;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.viewAction.LoginStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +34,8 @@ public class MainActivity extends BaseActivity {
         return MainFragment.newInstance();
     }
 
-    public static class MainFragment extends BaseLoadingFragment {
+    public static class MainFragment extends BaseLoadingFragment<LoginResult,
+            LoginPresenter<LoginResult>> implements LoginStatus<LoginResult>{
 
         @Bind(R.id.scroll_tab_fl)
         FrameLayout mScrollTabFl;
@@ -53,6 +60,11 @@ public class MainActivity extends BaseActivity {
 //            return inflater.inflate(R.layout.activity_main, container, false);
 //        }
 
+        @Override
+        public LoginPresenter<LoginResult> getPresenter() {
+            return new LoginPresenter(this, this);
+        }
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -67,9 +79,25 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            getPresenter().loadData();
+        }
+
+        @Override
         public void onDestroyView() {
             super.onDestroyView();
             ButterKnife.unbind(this);
+        }
+
+        @Override
+        public void login() {
+            new LoginModule().login();
+        }
+
+        @Override
+        public void success(LoginResult data) {
+
         }
 
         public static class MyTabFragment extends BaseTabFragment3 {

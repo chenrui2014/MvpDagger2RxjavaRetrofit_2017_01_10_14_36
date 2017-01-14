@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+//添加如下代码，应用apt插件
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -19,6 +22,19 @@ android {
     }
 }
 
+buildscript{
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        //添加apt插件
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -26,6 +42,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.google.dagger:dagger:2.4'
+    apt 'com.google.dagger:dagger-compiler:2.4'
     //java注解
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.reactivex:rxjava:1.0.14'

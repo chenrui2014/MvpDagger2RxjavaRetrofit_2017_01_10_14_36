@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean.BaseLoadingResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.FixedFlipper;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.LoadingLayout;
@@ -27,7 +28,8 @@ import butterknife.ButterKnife;
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public abstract class BaseLoadingFragment<T, P extends BaseLoadingPresenter<T>> extends BaseSwipeRefreshFragment<T, P> {
+public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
+        P extends BaseLoadingPresenter<T>> extends BaseSwipeRefreshFragment<T, P> {
 
     @Bind(R.id.flp)
     FixedFlipper mFlp;

@@ -1,5 +1,8 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean;
 
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean.BaseLoadingResult;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailBean.Email;
+
 /**
  * 描述说明  <br/>
  * Author : luokaixuan <br/>
@@ -9,5 +12,8 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean;
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class EmailBean {
+public class EmailBean extends BaseLoadingResult<Email>{
+    public static class Email{
+
+    }
 }
