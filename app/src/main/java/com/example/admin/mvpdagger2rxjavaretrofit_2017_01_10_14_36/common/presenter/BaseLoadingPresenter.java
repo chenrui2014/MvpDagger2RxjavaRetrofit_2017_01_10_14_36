@@ -13,10 +13,13 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status
  */
 public class BaseLoadingPresenter<T> implements BaseLoadingStatus<T> {
 
-//    BaseLoadingStatus<T> mBaseLoadingStatus;
+    BaseLoadingStatus<T> mBaseLoadingStatus;
 
     public BaseLoadingPresenter(BaseLoadingStatus<T> baseLoadingStatus) {
-//        mBaseLoadingStatus = baseLoadingStatus;
+        mBaseLoadingStatus = baseLoadingStatus;
+    }
+
+    public BaseLoadingPresenter() {
     }
 
     @Override
@@ -26,51 +29,57 @@ public class BaseLoadingPresenter<T> implements BaseLoadingStatus<T> {
 
     @Override
     public void startLoad() {
-//        mBaseLoadingStatus.startLoad();
+        mBaseLoadingStatus.startLoad();
     }
 
     @Override
     public void loading() {
-//        mBaseLoadingStatus.loading();
+        mBaseLoadingStatus.loading();
     }
 
     @Override
     public void success(T data) {
-//        mBaseLoadingStatus.success(data);
+        mBaseLoadingStatus.success(data);
+        //complete();
     }
 
     @Override
     public void empty() {
-//        mBaseLoadingStatus.empty();
+        mBaseLoadingStatus.empty();
+        //complete();
     }
 
     @Override
     public void failure(int code, String msg) {
-//        mBaseLoadingStatus.failure(code, msg);
+        mBaseLoadingStatus.failure(code, msg);
+        //complete();
     }
 
     @Override
     public void error(String msg) {
-//        mBaseLoadingStatus.error(msg);
+        mBaseLoadingStatus.error(msg);
+        //complete();
     }
 
     @Override
     public void complete() {
-//        mBaseLoadingStatus.complete();
+        mBaseLoadingStatus.complete();
     }
 
     @Override
     public void reLoad() {
-//        mBaseLoadingStatus.reLoad();
+        mBaseLoadingStatus.reLoad();
     }
 
     @Override
     public void offLine() {
-//        mBaseLoadingStatus.offLine();
+        mBaseLoadingStatus.offLine();
+        //complete();
     }
 
     @Override
     public void unLogin() {
-//        mBaseLoadingStatus.unLogin();
+        mBaseLoadingStatus.unLogin();
+        //complete();
     }
 }

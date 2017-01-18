@@ -1,9 +1,14 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.module;
 
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.module.BaseDataLoadingModule;
+import android.util.Log;
+
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.emailService.MailApiService;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.data.LoginApiService;
 
 import javax.inject.Inject;
+
+import rx.Observable;
 
 /**
  * 描述说明  <br/>
@@ -14,15 +19,45 @@ import javax.inject.Inject;
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class LoginModule extends BaseDataLoadingModule {
+public class LoginModule {
 
     @Inject
     protected LoginApiService mLoginApiService;//这个地方不能动，必须放这里
 
+    @Inject
+    protected MailApiService mMailApiService;
+
+//    @Inject
+//    protected Application mApplication;
+
+
+    public LoginModule() {
+//        DaggerLoginApiComponent.builder().build().inject(this);
+//        DaggerBaseApiComponent.builder().build().inject(this);
+//        DaggerApplicationComponent.builder().build().inject(this);
+    }
+
     //登录
    public void login () {
 
-//       Observable<LoginResult> loginResultObservable = mLoginApiService.login("admin",
-//               "21232f297a57a5a743894a0e4a801fc3");
+       Log.e(" login e22222 "," loginapiservice222 " + mLoginApiService);
+
+       Log.e(" Applica le222 "," ApplicationModule22 " + mMailApiService);
+
+//       Log.e(" Application "," Application " + mApplication);
+
+       Observable<LoginResult> loginResultObservable = mLoginApiService.login("admin",
+               "21232f297a57a5a743894a0e4a801fc3");
+
+//       loginResultObservable.subscribeOn(Schedulers.io())
+//               .observeOn(AndroidSchedulers.mainThread())
+//               .subscribe(new LoginSubscriber<LoginResult>(loginPresenter));
    }
+
+//    public class LoginSubscriber<T> extends BaseLoadingSubscriber<T> {
+//
+//        public LoginSubscriber(BaseLoadingStatus<T> baseLoadingStatus) {
+//            super(baseLoadingStatus);
+//        }
+//    }
 }

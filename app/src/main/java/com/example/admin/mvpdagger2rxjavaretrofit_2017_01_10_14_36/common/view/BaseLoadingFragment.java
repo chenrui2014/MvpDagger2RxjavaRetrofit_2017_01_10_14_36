@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -66,6 +67,21 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
         View view = inflater.inflate(R.layout.layout_loading, null);
         mLoadingLayout = (LoadingLayout) view.findViewById(R.id.loading_layout);
         mLoadingLayout.addView(container, 0);
+        LinearLayout mLlError = (LinearLayout) mLoadingLayout.findViewById(R.id.load_error_ll);
+        mLlError.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reLoad();
+            }
+        });
+        LinearLayout mLlEmpty = (LinearLayout) mLoadingLayout.findViewById(R.id.load_empty_ll);
+        mLlEmpty.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reLoad();
+            }
+        });
+
         return view;
     }
 
@@ -86,66 +102,68 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
     public void startLoad() {
         loading();
         mLoadingLayout.startLoad();
-        getPresenter().startLoad();
+        //getPresenter().startLoad();
     }
 
     @Override
     public void loading() {
         mLoadingLayout.loading();
-        getPresenter().loading();
+        //getPresenter().loading();
     }
 
     @Override
     public void success(T data) {
         mLoadingLayout.success(data);
-        getPresenter().success(data);
+        //getPresenter().success(data);
         complete();
     }
 
     @Override
     public void empty() {
         mLoadingLayout.empty();
-        getPresenter().empty();
+        //getPresenter().empty();
         complete();
     }
 
     @Override
     public void failure(int code, String msg) {
         mLoadingLayout.failure(code, msg);
-        getPresenter().failure(code, msg);
+        //getPresenter().failure(code, msg);
         complete();
     }
 
     @Override
     public void error(String msg) {
         mLoadingLayout.error(msg);
-        getPresenter().error(msg);
+        //getPresenter().error(msg);
         complete();
     }
 
     @Override
     public void complete() {
+        super.complete();
         mLoadingLayout.complete();
-        getPresenter().complete();
+        //        //getPresenter().complete();
     }
 
     @Override
     public void reLoad() {
         mLoadingLayout.reLoad();
-        getPresenter().reLoad();
-        startLoad();
+        //getPresenter().reLoad();
+//        startLoad();
+        loadData();
     }
 
     @Override
     public void offLine() {
         mLoadingLayout.offLine();
-        getPresenter().offLine();
+        //getPresenter().offLine();
     }
 
     @Override
     public void unLogin() {
         mLoadingLayout.unLogin();
-        getPresenter().unLogin();
+        //getPresenter().unLogin();
     }
 
     @Override

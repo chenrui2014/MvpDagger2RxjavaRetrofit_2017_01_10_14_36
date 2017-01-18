@@ -3,7 +3,6 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,13 +37,13 @@ public class LoadingFixedFlipper<T> extends FixedFlipper implements BaseLoadingS
         super.onFinishInflate();
 
         mTvError = (TextView) findViewById(R.id.load_error_tv);
-        mLlError = (LinearLayout) findViewById(R.id.load_error_ll);
-        mLlError.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                reLoad();
-            }
-        });
+//        mLlError = (LinearLayout) findViewById(R.id.load_error_ll);
+//        mLlError.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                reLoad();
+//            }
+//        });
         ImageView ivLoading = (ImageView) findViewById(R.id.loading_iv);
         AnimationDrawable loadingDrawable = (AnimationDrawable) ivLoading.getDrawable();
         loadingDrawable.start();

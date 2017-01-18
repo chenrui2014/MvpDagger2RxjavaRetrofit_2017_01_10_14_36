@@ -1,7 +1,6 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.module;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.data.BaseApiService;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.emailService.MailApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,7 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class BaseApiServiceModule {
 
-    public static final String API_SERVER_URL = "http://192.168.1.34:5555";
+//    public static final String API_SERVER_URL = "http://192.168.1.34:5555";
+//public static final String API_SERVER_URL = "http://192.168.1.31:85";
+public static final String API_SERVER_URL = "http://192.168.1.10";
 
     private OkHttpClient.Builder mBuilder;
     private static final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
@@ -121,10 +122,10 @@ public class BaseApiServiceModule {
 //        return build.create(LoginApiService.class);
 //    }
 
-    @Provides
-    @Singleton
-    protected MailApiService provideEmailService(Retrofit build) {
-        return build.create(MailApiService.class);
-    }
+//    @Provides
+//    @Singleton
+//    protected MailApiService provideEmailService(Retrofit build) {
+//        return build.create(MailApiService.class);
+//    }
 
 }

@@ -13,6 +13,8 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presen
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment;
 
+import static com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R.id.srl;
+
 /**
  * 描述说明  <br/>
  * Author : luokaixuan <br/>
@@ -38,7 +40,16 @@ public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter
     }
 
     protected void setSwipeRefreshEnable(SwipeRefreshLayout srl, boolean enable) {
-        srl.setEnabled(enable);
+        if (srl != null) {
+            srl.setEnabled(enable);
+        }
+    }
+
+    protected void setSwipeRefreshEnable(boolean enable) {
+        SwipeRefreshLayout srl = getSrl();
+        if (srl != null) {
+            srl.setEnabled(enable);
+        }
     }
 
     @Nullable
@@ -52,7 +63,7 @@ public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter
     private View addSwipeRefreshView (LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
         View swipeView = inflater.inflate(R.layout.layout_swipe_refresh, null);
-        mSrl = (SwipeRefreshLayout) swipeView.findViewById(R.id.srl);
+        mSrl = (SwipeRefreshLayout) swipeView.findViewById(srl);
         mSrl.addView(container);
         mSrl.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -62,5 +73,13 @@ public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter
         });
         setSwipeRefreshEnable(getSrl(), false);
         return swipeView;
+//        return container;
+    }
+
+    @Override
+    public void complete() {
+        if (mSrl != null) {
+            mSrl.setRefreshing(false);
+        }
     }
 }

@@ -17,9 +17,7 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.B
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseTabFragment3;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.module.LoginModule;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.presenter.LoginPresenter;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.viewAction.LoginStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public static class MainFragment extends BaseLoadingFragment<LoginResult,
-            LoginPresenter<LoginResult>> implements LoginStatus<LoginResult>{
+            LoginPresenter>{
 
         @Bind(R.id.scroll_tab_fl)
         FrameLayout mScrollTabFl;
@@ -61,8 +59,8 @@ public class MainActivity extends BaseActivity {
 //        }
 
         @Override
-        public LoginPresenter<LoginResult> getPresenter() {
-            return new LoginPresenter(this, this);
+        public LoginPresenter getPresenter() {
+            return new LoginPresenter(this);
         }
 
         @Nullable
@@ -81,7 +79,9 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            getPresenter().loadData();
+//            getPresenter().loadData();
+            getPresenter().login();
+            setSwipeRefreshEnable(false);
         }
 
         @Override
@@ -91,13 +91,8 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
-        public void login() {
-            new LoginModule().login();
-        }
-
-        @Override
         public void success(LoginResult data) {
-
+            super.success(data);
         }
 
         public static class MyTabFragment extends BaseTabFragment3 {

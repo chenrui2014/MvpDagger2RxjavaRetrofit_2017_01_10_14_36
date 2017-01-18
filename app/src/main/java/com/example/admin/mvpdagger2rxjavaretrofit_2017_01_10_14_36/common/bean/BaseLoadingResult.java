@@ -9,5 +9,5 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean;
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class BaseLoadingResult<T> extends BaseResult {
+public class BaseLoadingResult extends BaseResult {
 }

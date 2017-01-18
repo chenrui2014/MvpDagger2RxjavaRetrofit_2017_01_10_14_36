@@ -10,4 +10,22 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean;
  * Version 1.0
  */
 public class BaseResult {
+    private int flag;
+    private String msg;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }
