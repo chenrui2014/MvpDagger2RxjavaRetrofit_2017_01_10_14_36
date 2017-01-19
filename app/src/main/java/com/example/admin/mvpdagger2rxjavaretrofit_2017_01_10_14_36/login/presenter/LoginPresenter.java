@@ -5,7 +5,6 @@ import android.util.Log;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx.BaseLoadingSubscriber;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.emailService.MailApiService;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.component.DaggerLoginApiComponent;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.data.LoginApiService;
@@ -33,14 +32,18 @@ public class LoginPresenter extends BaseLoadingPresenter<LoginResult> {
     @Inject
     protected LoginApiService mLoginApiService;//这个地方不能动，必须放这里
 
-    @Inject
-    protected MailApiService mMailApiService;
+//    @Inject
+//    protected MailApiService mMailApiService;
 
     public LoginPresenter(BaseLoadingStatus<LoginResult> baseLoadingStatus) {
         super(baseLoadingStatus);
 //        mLoginStatus = loginStatus;
         DaggerLoginApiComponent.builder().build().inject(this);
     }
+
+//    public LoginPresenter() {
+//        DaggerLoginApiComponent.builder().build().inject(this);
+//    }
 
     @Override
     public void loadData() {
@@ -52,7 +55,7 @@ public class LoginPresenter extends BaseLoadingPresenter<LoginResult> {
     public void login() {
         Log.e(" logi s333333333 "," loginapi333333 " + mLoginApiService);
 
-        Log.e(" Applicati333333 "," Applicat33333 " + mMailApiService);
+//        Log.e(" Applicati333333 "," Applicat33333 " + mMailApiService);
 
 //        Observable<LoginResult> loginResultObservable = mLoginApiService.login("admin",
 //                "21232f297a57a5a743894a0e4a801fc3");

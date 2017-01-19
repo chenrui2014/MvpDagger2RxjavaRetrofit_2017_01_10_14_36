@@ -1,7 +1,8 @@
-package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view;
+package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean.BaseLoadingResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.FixedFlipper;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.LoadingLayout;
 
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
  * Version 1.0
  */
 public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
-        P extends BaseLoadingPresenter<T>> extends BaseSwipeRefreshFragment<T, P> {
+        P extends BaseLoadingPresenter<T>> extends BaseSwipeRefreshFragment implements BaseLoadingStatus<T> {
 
     @Bind(R.id.flp)
     FixedFlipper mFlp;
@@ -50,6 +52,8 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
     LinearLayout mLoadingLl;
     @Bind(R.id.loading_layout)
     LoadingLayout mLoadingLayout;
+
+    public abstract P getPresenter();
 
     @Nullable
     @Override
@@ -88,7 +92,12 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        setOnSwipeRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
     }
 
     @Override
@@ -141,9 +150,9 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
 
     @Override
     public void complete() {
-        super.complete();
         mLoadingLayout.complete();
         //        //getPresenter().complete();
+        setSwipeRefreshing(false);
     }
 
     @Override

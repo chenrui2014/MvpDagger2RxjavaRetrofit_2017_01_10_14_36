@@ -1,4 +1,4 @@
-package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view;
+package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity;
 
 import android.support.v4.app.Fragment;
 

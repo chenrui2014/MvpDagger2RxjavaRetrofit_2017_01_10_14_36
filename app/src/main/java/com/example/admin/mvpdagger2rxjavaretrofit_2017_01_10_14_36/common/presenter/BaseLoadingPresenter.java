@@ -11,15 +11,12 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class BaseLoadingPresenter<T> implements BaseLoadingStatus<T> {
+public class BaseLoadingPresenter<DATA> implements BaseLoadingStatus<DATA> {
 
-    BaseLoadingStatus<T> mBaseLoadingStatus;
+    protected BaseLoadingStatus<DATA> mBaseLoadingStatus;
 
-    public BaseLoadingPresenter(BaseLoadingStatus<T> baseLoadingStatus) {
+    public BaseLoadingPresenter(BaseLoadingStatus<DATA> baseLoadingStatus) {
         mBaseLoadingStatus = baseLoadingStatus;
-    }
-
-    public BaseLoadingPresenter() {
     }
 
     @Override
@@ -38,7 +35,7 @@ public class BaseLoadingPresenter<T> implements BaseLoadingStatus<T> {
     }
 
     @Override
-    public void success(T data) {
+    public void success(DATA data) {
         mBaseLoadingStatus.success(data);
         //complete();
     }

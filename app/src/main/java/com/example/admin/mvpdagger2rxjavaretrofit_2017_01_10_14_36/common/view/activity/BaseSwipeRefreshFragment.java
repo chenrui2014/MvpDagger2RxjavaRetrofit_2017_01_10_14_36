@@ -1,4 +1,4 @@
-package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view;
+package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx.RxFragment;
 
 import static com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R.id.srl;
@@ -24,10 +22,8 @@ import static com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R.id.s
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter<T>>
-        extends RxFragment implements BaseLoadingStatus<T> {
-
-    public abstract P getPresenter();
+public class BaseSwipeRefreshFragment
+        extends RxFragment {
 
     SwipeRefreshLayout mSrl;
 
@@ -52,6 +48,20 @@ public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter
         }
     }
 
+    protected void setOnSwipeRefreshListener (OnRefreshListener listener) {
+        SwipeRefreshLayout srl = getSrl();
+        if (srl != null) {
+            srl.setOnRefreshListener(listener);
+        }
+    }
+
+    protected void setSwipeRefreshing(boolean refreshing) {
+        SwipeRefreshLayout srl = getSrl();
+        if (srl != null) {
+            srl.setRefreshing(refreshing);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container
@@ -65,21 +75,14 @@ public abstract class BaseSwipeRefreshFragment<T, P extends BaseLoadingPresenter
         View swipeView = inflater.inflate(R.layout.layout_swipe_refresh, null);
         mSrl = (SwipeRefreshLayout) swipeView.findViewById(srl);
         mSrl.addView(container);
-        mSrl.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-            }
-        });
+//        mSrl.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                loadData();
+//            }
+//        });
         setSwipeRefreshEnable(getSrl(), false);
         return swipeView;
 //        return container;
-    }
-
-    @Override
-    public void complete() {
-        if (mSrl != null) {
-            mSrl.setRefreshing(false);
-        }
     }
 }

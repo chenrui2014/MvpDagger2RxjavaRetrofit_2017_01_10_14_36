@@ -3,7 +3,7 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.rx;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseToolbarFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseToolbarFragment;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.FragmentLifecycleProvider;
 import com.trello.rxlifecycle.RxLifecycle;

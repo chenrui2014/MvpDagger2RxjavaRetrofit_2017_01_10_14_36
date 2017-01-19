@@ -4,8 +4,8 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.compo
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.module.ApplicationModule;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.module.BaseDataModule;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BasePresenter;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseActivity;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseActivity;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseFragment;
 
 import javax.inject.Singleton;
 

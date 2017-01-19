@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseLoadingPresenter;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseLoadingFragment;
 
 /**
  * --------------------------------------------

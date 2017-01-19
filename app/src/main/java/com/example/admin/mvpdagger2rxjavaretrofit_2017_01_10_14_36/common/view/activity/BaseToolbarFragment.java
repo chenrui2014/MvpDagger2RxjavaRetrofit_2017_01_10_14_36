@@ -1,7 +1,8 @@
-package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view;
+package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ public class BaseToolbarFragment extends BaseFragment {
 //                , savedInstanceState);
 
         ViewGroup viewGroup = addToolbarView(inflater, container, savedInstanceState);
-        mToolbar = (Toolbar) viewGroup.findViewById(R.id.toolbar);
         return viewGroup;
     }
 
@@ -41,6 +41,9 @@ public class BaseToolbarFragment extends BaseFragment {
         View toolbarLayout = inflater.inflate(R.layout.layout_toolbar, container, false);
         LinearLayout llContainer = (LinearLayout) toolbarLayout.findViewById(R.id.toolbar_content);
         llContainer.addView(container);
+        mToolbar = (Toolbar) toolbarLayout.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(mToolbar);
         return (ViewGroup) toolbarLayout;
     }
 

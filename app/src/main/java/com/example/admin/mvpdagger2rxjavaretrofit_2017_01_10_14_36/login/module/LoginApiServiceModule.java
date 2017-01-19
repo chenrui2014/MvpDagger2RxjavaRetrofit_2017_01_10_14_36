@@ -1,6 +1,5 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.module;
 
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.emailService.MailApiService;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.data.LoginApiService;
 
 import javax.inject.Singleton;
@@ -26,12 +25,6 @@ public class LoginApiServiceModule {
     protected LoginApiService provideLoginService(Retrofit build) {
         LoginApiService loginApiService = build.create(LoginApiService.class);
         return loginApiService;
-    }
-
-    @Provides
-    @Singleton
-    protected MailApiService provideEmailService(Retrofit build) {
-        return build.create(MailApiService.class);
     }
 
 //    @Provides

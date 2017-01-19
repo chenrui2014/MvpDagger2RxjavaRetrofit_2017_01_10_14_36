@@ -1,10 +1,13 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -13,9 +16,10 @@ import android.widget.TextView;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.main.RecyclerFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.main.ScrollFragment;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseActivity;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseTabFragment3;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseActivity;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseLoadingFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseTabFragment3;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.view.EmailActivity;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.presenter.LoginPresenter;
 
@@ -114,5 +118,21 @@ public class MainActivity extends BaseActivity {
                 return tabList;
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.more, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_more:
+                startActivity(new Intent(this, EmailActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

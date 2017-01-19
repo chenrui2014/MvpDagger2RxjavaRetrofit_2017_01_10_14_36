@@ -3,18 +3,24 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseActivity;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.BaseLoadingFragment;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailBean;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailContent;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailSendResult;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailUploadBean;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseActivity;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseListFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean.EmailList;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.presenter.EmailPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.status.EmailStatus;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 描述说明  <br/>
@@ -32,7 +38,8 @@ public class EmailActivity extends BaseActivity {
     }
 
     public static class EmailFragment extends
-            BaseLoadingFragment<EmailBean, EmailPresenter<EmailBean>> implements EmailStatus<EmailBean>{
+            BaseListFragment<EmailList, EmailListBean, EmailPresenter, EmailViewMyHolder2>
+            implements EmailStatus<EmailListBean> {
 
         public static EmailFragment newInstance() {
 
@@ -44,8 +51,8 @@ public class EmailActivity extends BaseActivity {
         }
 
         @Override
-        public EmailPresenter<EmailBean> getPresenter() {
-            return new EmailPresenter<>(this, this);
+        public EmailPresenter getPresenter() {
+            return new EmailPresenter(this);
         }
 
         @Nullable
@@ -58,28 +65,79 @@ public class EmailActivity extends BaseActivity {
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+        }
+
+        @Override
+        protected EmailViewMyHolder2 createItemViewHolder(ViewGroup parent) {
+            return new EmailViewMyHolder2(LayoutInflater.from(this.getContext()).inflate(R.layout.item_emial, parent, false));
+        }
+
+        @Override
+        protected void bindItemViewHolder(EmailViewMyHolder2 holder, EmailList emailList, int position) {
+            holder.mItemEmailTime.setText(emailList.getRecvTime());
+            holder.mItemEmailTitle.setText(emailList.getTitle());
+            holder.mBtnTop.setVisibility(View.GONE);
+            holder.mBtnDelete.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    getBaseList().remove(position);
+//                    getBaseHFAdapter().notifyItemRemoved(position);
+                }
+            });
+        }
+
+
+//        @Override
+//        protected MyHolderItem createItemViewHolder(ViewGroup parent) {
+//            return new EmailViewMyHolder(LayoutInflater.from(this.getContext()).inflate(R.layout.item_emial, parent, false));
+//        }
+
+//        @Override
+//        protected void bindItemViewHolder(ViewHolder holder, EmailList emailList, int position) {
+//            ((EmailViewMyHolder) holder).mItemEmailTime.setText(emailList.getRecvTime());
+//            ((EmailViewMyHolder) holder).mItemEmailTitle.setText(emailList.getTitle());
+//            ((EmailViewMyHolder) holder).mBtnTop.setVisibility(View.GONE);
+//            ((EmailViewMyHolder) holder).mBtnDelete.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                    getBaseList().remove(position);
+////                    getBaseHFAdapter().notifyItemRemoved(position);
+//                }
+//            });
+//        }
+
+        @Override
+        protected void loadStartData() {
             getPresenter().loadData();
         }
 
         @Override
-        public void fillView(EmailBean data) {
-
+        protected void loadMoreData(EmailList emailList) {
+            getPresenter().loadMore(emailList);
         }
 
         @Override
-        public void uploadAttachResult(EmailUploadBean emailUpload) {
+        public void fillView(EmailListBean data) {
 
         }
 
-        @Override
-        public void mailSendResult(EmailSendResult emailSendResult) {
+    }
 
+    public static class EmailViewMyHolder2 extends ViewHolder {
+        @Bind(R.id.item_email_title)
+        TextView mItemEmailTitle;
+        @Bind(R.id.item_email_time)
+        TextView mItemEmailTime;
+        @Bind(R.id.btnTop)
+        Button mBtnTop;
+        @Bind(R.id.btnUnRead)
+        Button mBtnUnRead;
+        @Bind(R.id.btnDelete)
+        Button mBtnDelete;
+
+        public EmailViewMyHolder2(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
-
-        @Override
-        public void sendMail(EmailContent emailContent) {
-
-        }
-
     }
 }
