@@ -1,5 +1,6 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
@@ -42,12 +45,11 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
         , P extends BaseLoadingPresenter<DATA>
         , HOLDER extends ViewHolder>
         extends BaseLoadingFragment<DATA, P>
-        implements BaseListStatus<ITEM>
-{
+        implements BaseListStatus<ITEM> {
 
     private RecyclerView mRcv;
 
-    public RecyclerView getRcv() {
+    protected RecyclerView getRcv() {
         return mRcv;
     }
 
@@ -55,12 +57,55 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
         mRcv = rcv;
     }
 
-    boolean isLoading, hasMore = true, isLoadMore;
+    private boolean mIsLoading, mHasMore = true, mIsLoadMore;
 
-    List<ITEM> mBaseList;
-    TextView tvFooter;
-    BaseHFAdapter mBaseHFAdapter;
-    View itemFootView;
+    private List<ITEM> mBaseList;
+    private TextView mTvFooter;
+    private View mItemFootView;
+
+    public boolean isLoading() {
+        return mIsLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        mIsLoading = loading;
+    }
+
+    public boolean isHasMore() {
+        return mHasMore;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        mHasMore = hasMore;
+    }
+
+    public boolean isLoadMore() {
+        return mIsLoadMore;
+    }
+
+    public void setLoadMore(boolean loadMore) {
+        mIsLoadMore = loadMore;
+    }
+
+    public List<ITEM> getBaseList() {
+        return mBaseList;
+    }
+
+    public TextView getTvFooter() {
+        return mTvFooter;
+    }
+
+    public void setTvFooter(TextView tvFooter) {
+        mTvFooter = tvFooter;
+    }
+
+    public View getItemFootView() {
+        return mItemFootView;
+    }
+
+    public void setItemFootView(View itemFootView) {
+        mItemFootView = itemFootView;
+    }
 
     @Nullable
     @Override
@@ -78,28 +123,39 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
         mRcv.setHasFixedSize(true);
 //        baseListAdapter = new BaseListAdapter();
 //        setRecyclerViewAdapter(baseListAdapter);
-        mBaseHFAdapter = new BaseHFAdapter(new BaseListAdapter2());
-        itemFootView = LayoutInflater.from(this.getActivity()).inflate(R.layout.item_loading, null);
+        BaseHFAdapter baseHFAdapter = new BaseHFAdapter(new BaseListAdapter2());//能够添加头部尾部的适配器
+        addFootView(baseHFAdapter);//添加尾部。
+        setRecyclerViewAdapter(baseHFAdapter);//设置适配器
+        setRcvScrollListener(getRcv());//设置滚动监听。
+        addRcvItemTouchListener(baseHFAdapter, getRcv());//设置条目点击
+    }
+
+    private void addFootView(BaseHFAdapter baseHFAdapter) {
+        mItemFootView = LayoutInflater.from(this.getActivity()).inflate(R.layout.item_loading, null);
         FrameLayout.LayoutParams lytp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lytp.gravity = Gravity.CENTER;
-        itemFootView.setLayoutParams(lytp);
-        tvFooter = (TextView) itemFootView.findViewById(R.id.progressTv);
+        mItemFootView.setLayoutParams(lytp);
+        mTvFooter = (TextView) mItemFootView.findViewById(R.id.progressTv);
+        ImageView ivLoading = (ImageView) mItemFootView.findViewById(R.id.progressIv);
+        AnimationDrawable loadingDrawable = (AnimationDrawable) ivLoading.getDrawable();
+        loadingDrawable.start();
         setFooterClick();
-        mBaseHFAdapter.addFootView(itemFootView);
-        setRecyclerViewAdapter(mBaseHFAdapter);
+        baseHFAdapter.addFootView(mItemFootView);
+    }
 
-        mRcv.setOnScrollListener(new OnScrollListener() {
-            int lastVisibleItem;
+    private void setRcvScrollListener(final RecyclerView rcv) {
+        rcv.setOnScrollListener(new OnScrollListener() {
+            private int lastVisibleItem;
             private int[] lastPositions;
-            int totalItemCount;
-            int visibleThreshold = 0;
+            private int totalItemCount;
+            private int visibleThreshold = 0;
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                LayoutManager layoutManager = mRcv.getLayoutManager();
+                LayoutManager layoutManager = rcv.getLayoutManager();
                 if (layoutManager != null) {
                     if (layoutManager instanceof LinearLayoutManager) {
                         lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
@@ -117,23 +173,25 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
                     }
                 }
 
-//                totalItemCount = layoutManager.getItemCount();
+//                totalItemCount = layoutManager.getItemCount();//这个包括头部和尾部
 
-                if (mBaseList != null) {
-                    totalItemCount = mBaseList.size();
+                if (getBaseList() != null) {//这个不包括头部和尾部
+                    totalItemCount = getBaseList().size();
                 }
 
-                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold) && hasMore) {
-                    if (mBaseList != null && mBaseList.size() > 0) {
-                        isLoading = true;
-                        isLoadMore = true;
-                        loadMore(mBaseList.get(mBaseList.size() - 1));
+                if (!isLoading() && totalItemCount <= (lastVisibleItem + visibleThreshold) && isHasMore()) {
+                    if (getBaseList() != null && getBaseList().size() > 0) {
+                        setLoading(true);
+                        setLoadMore(true);
+                        loadMore(getBaseList().get(getBaseList().size() - 1));
                     }
                 }
             }
         });
+    }
 
-        mRcv.addOnItemTouchListener(new OnRecyclerItemClickListener(mRcv) {
+    private void addRcvItemTouchListener(final BaseHFAdapter baseHFAdapter, final RecyclerView rcv) {
+        rcv.addOnItemTouchListener(new OnRecyclerItemClickListener(rcv) {
             @Override
             public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
 
@@ -147,9 +205,9 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
             @Override
             public void onItemClick(ViewHolder vh) {
                 //屏蔽头部和尾部点击
-                if (mBaseHFAdapter.isHeaderViewPos(vh.getPosition())) {
+                if (baseHFAdapter.isHeaderViewPos(vh.getPosition())) {
 
-                } else if (mBaseHFAdapter.isFooterViewPos(vh.getPosition())) {
+                } else if (baseHFAdapter.isFooterViewPos(vh.getPosition())) {
 
                 } else {
                     onItemClickListener(mBaseList.get(vh.getPosition()));
@@ -159,9 +217,9 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
             @Override
             public void onItemLongClick(ViewHolder vh) {
                 //屏蔽头部和尾部点击
-                if (mBaseHFAdapter.isHeaderViewPos(vh.getPosition())) {
+                if (baseHFAdapter.isHeaderViewPos(vh.getPosition())) {
 
-                } else if (mBaseHFAdapter.isFooterViewPos(vh.getPosition())) {
+                } else if (baseHFAdapter.isFooterViewPos(vh.getPosition())) {
 
                 } else {
                     onItemLongClickListener(mBaseList.get(vh.getPosition()));
@@ -228,22 +286,22 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
     }
 
     protected void setFooterText(String text) {
-        if (tvFooter != null) {
-            tvFooter.setText(text);
+        if (mTvFooter != null) {
+            mTvFooter.setText(text);
         }
     }
 
     protected void setFooterText(@StringRes int text) {
-        if (tvFooter != null) {
-            tvFooter.setText(getString(text));
+        if (mTvFooter != null) {
+            mTvFooter.setText(getString(text));
         }
     }
 
     protected void setFooterClick() {
-        itemFootView.setOnClickListener(new OnClickListener() {
+        mItemFootView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!hasMore) {
+                if (!mHasMore) {
                     return;
                 }
 //                if (getLastItem() == null) {
@@ -251,7 +309,7 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 //                } else {
 //                    loadMoreData(getLastItem());
 //                }
-                if (isLoadMore && getLastItem() != null) {
+                if (mIsLoadMore && getLastItem() != null) {
                     loadMore(getLastItem());
                 } else {
                     loadData();
@@ -261,11 +319,11 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
     }
 
     protected void setFooterVisiable(int visibility) {
-        itemFootView.findViewById(R.id.item_loading).setVisibility(visibility);
+        mItemFootView.findViewById(R.id.item_loading).setVisibility(visibility);
     }
 
     protected void setFooterEnable(boolean enable) {
-        itemFootView.setEnabled(enable);
+        mItemFootView.setEnabled(enable);
     }
 
     protected void setRefreshAble(boolean isRefresh) {
@@ -274,12 +332,13 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
         }
     }
 
-    ITEM getLastItem() {
+    protected ITEM getLastItem() {
         return mBaseList != null && mBaseList.size() > 0 ? mBaseList.get(mBaseList.size() - 1) : null;
     }
 
     public int getBaseListSize() {
-        return mBaseHFAdapter == null ? 0 : mBaseHFAdapter.getItemCount();
+//        return mBaseHFAdapter == null ? 0 : mBaseHFAdapter.getItemCount();
+        return mBaseList == null ? 0 : mBaseList.size();
     }
 
     public void initBaseList() {
@@ -292,14 +351,16 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 
     @Override
     public void loadData() {
-        super.loadData();
+//        super.loadData();//不能调用父类的
 
+        Log.e(" loadData "," loadData " );
 //        mBaseList = new ArrayList<>();
 //        mBaseHFAdapter.notifyDataSetChanged();
 
-        isLoadMore = false;
-        if (!mSrl.isRefreshing()) {
-            mSrl.setRefreshing(true);
+        setLoadMore(false);
+
+        if (!getSrl().isRefreshing()) {
+            getSrl().setRefreshing(true);
         }
         loadStartData();
         hasMore();
@@ -308,28 +369,28 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 
     @Override
     public void startLoad() {
-        super.startLoad();
+//        super.startLoad();
         setFooterVisiable(View.VISIBLE);
         setFooterEnable(false);
     }
 
     @Override
     public void noMore() {
-        hasMore = false;
+        setHasMore(false);
         setFooterText("没有更多。。。");
         setFooterEnable(false);
     }
 
     @Override
     public void hasMore() {
-        hasMore = true;
+        setHasMore(true);
         setFooterText("加载中。。。");
         setFooterEnable(false);
     }
 
     @Override
     public void error(String msg) {
-        if (!isLoadMore) {
+        if (!isLoadMore()) {
             super.error(msg);
             setFooterVisiable(View.GONE);
         }
@@ -339,7 +400,7 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 
     @Override
     public void failure(int code, String msg) {
-        if (!isLoadMore) {
+        if (!isLoadMore()) {
             super.failure(code, msg);
             setFooterVisiable(View.GONE);
         }
@@ -353,6 +414,7 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
         setFooterEnable(false);
         if (lastItem == null) {
             loadData();
+            Log.e(" loadData 加载更多，"," loadData 加载更多，" );
         } else {
             loadMoreData(lastItem);
         }
@@ -361,8 +423,8 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
     @Override
     public void complete() {
         super.complete();
-        isLoading = false;
-        mSrl.setRefreshing(false);
+        setLoading(false);
+        getSrl().setRefreshing(false);
 //        setFooterText("没有更多");
 //        setFooterEnable(false);
     }
@@ -371,18 +433,18 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
     public void success(DATA data) {
         super.success(data);
 
-        mSrl.setRefreshing(false);
+        getSrl().setRefreshing(false);
         if (data == null) {
             noMore();
         } else {
             List<ITEM> list = data.getList();
-            if (isLoadMore) {
+            if (isLoadMore()) {
                 getListMoreData(list);
             } else {
                 getListData(list);
             }
 
-            mRcv.getAdapter().notifyDataSetChanged();
+            getRcv().getAdapter().notifyDataSetChanged();
         }
 //        notifyData(mRcv.getAdapter(), oldList, mBaseList);
 
@@ -400,8 +462,8 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 
     @Override
     public void getListData(List<ITEM> list) {
-        mBaseList = list;
-        if (mBaseList == null || mBaseList.size() == 0) {
+        setBaseList(list);
+        if (getBaseList() == null || getBaseList().size() == 0) {
             empty();
         }
     }
@@ -412,7 +474,7 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
         if (list == null || list.size() == 0) {
             noMore();
         } else {
-            mBaseList.addAll(list);
+            getBaseList().addAll(list);
         }
     }
 
@@ -431,7 +493,7 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 
     @Override
     public void loading() {
-        super.loading();
+//        super.loading();
     }
 
 }

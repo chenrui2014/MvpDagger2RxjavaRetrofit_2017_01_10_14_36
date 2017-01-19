@@ -1,5 +1,7 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.presenter;
 
+import android.util.Log;
+
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseListPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx.BaseLoadingSubscriber;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
@@ -44,6 +46,7 @@ public class EmailPresenter extends BaseListPresenter<EmailList, EmailListBean> 
     @Override
     public void loadData() {
         super.loadData();
+        Log.e(" load emailpresenter ","  load emailpresenter ");
         observ(0+"");
     }
 

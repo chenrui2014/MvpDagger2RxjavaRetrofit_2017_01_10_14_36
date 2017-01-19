@@ -23,7 +23,7 @@ public class BaseListPresenter<ITEM, DATA>
 
     @Override
     public void loadMore(ITEM data) {
-
+        loading();
     }
 
     @Override

@@ -6,11 +6,7 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presen
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx.BaseLoadingSubscriber;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.component.DaggerLoginApiComponent;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.data.LoginApiService;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.viewAction.LoginStatus;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,16 +25,12 @@ public class LoginPresenter extends BaseLoadingPresenter<LoginResult> {
 
     LoginStatus<LoginResult> mLoginStatus;
 
-    @Inject
-    protected LoginApiService mLoginApiService;//这个地方不能动，必须放这里
-
 //    @Inject
 //    protected MailApiService mMailApiService;
 
     public LoginPresenter(BaseLoadingStatus<LoginResult> baseLoadingStatus) {
         super(baseLoadingStatus);
 //        mLoginStatus = loginStatus;
-        DaggerLoginApiComponent.builder().build().inject(this);
     }
 
 //    public LoginPresenter() {

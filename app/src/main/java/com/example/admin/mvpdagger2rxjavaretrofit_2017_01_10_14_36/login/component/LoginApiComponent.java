@@ -2,7 +2,6 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.compon
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.module.BaseApiServiceModule;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.module.LoginApiServiceModule;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.presenter.LoginPresenter;
 
 import javax.inject.Singleton;
 
@@ -21,5 +20,6 @@ import dagger.Component;
 @Component(modules = {BaseApiServiceModule.class, LoginApiServiceModule.class})
 public interface LoginApiComponent {
 //    void inject(LoginModule loginModule);
-    void inject(LoginPresenter loginPresenter);
+//    void inject(LoginPresenter loginPresenter);
+//    void inject(BasePresenter basePresenter);
 }

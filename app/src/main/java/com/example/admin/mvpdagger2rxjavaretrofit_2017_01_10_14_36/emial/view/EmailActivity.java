@@ -65,6 +65,7 @@ public class EmailActivity extends BaseActivity {
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            getPresenter().loadData();
         }
 
         @Override

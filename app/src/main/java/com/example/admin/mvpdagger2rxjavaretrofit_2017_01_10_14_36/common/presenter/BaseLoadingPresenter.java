@@ -1,6 +1,10 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter;
 
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx.BaseLoadingSubscriber;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 描述说明  <br/>
@@ -11,7 +15,7 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class BaseLoadingPresenter<DATA> implements BaseLoadingStatus<DATA> {
+public class BaseLoadingPresenter<DATA> extends BasePresenter implements BaseLoadingStatus<DATA> {
 
     protected BaseLoadingStatus<DATA> mBaseLoadingStatus;
 
@@ -22,11 +26,13 @@ public class BaseLoadingPresenter<DATA> implements BaseLoadingStatus<DATA> {
     @Override
     public void loadData() {
 //        mBaseLoadingStatus.loadData();
+        startLoad();
     }
 
     @Override
     public void startLoad() {
         mBaseLoadingStatus.startLoad();
+        loading();
     }
 
     @Override
@@ -37,25 +43,25 @@ public class BaseLoadingPresenter<DATA> implements BaseLoadingStatus<DATA> {
     @Override
     public void success(DATA data) {
         mBaseLoadingStatus.success(data);
-        //complete();
+        complete();
     }
 
     @Override
     public void empty() {
         mBaseLoadingStatus.empty();
-        //complete();
+        complete();
     }
 
     @Override
     public void failure(int code, String msg) {
         mBaseLoadingStatus.failure(code, msg);
-        //complete();
+        complete();
     }
 
     @Override
     public void error(String msg) {
         mBaseLoadingStatus.error(msg);
-        //complete();
+        complete();
     }
 
     @Override
@@ -71,12 +77,16 @@ public class BaseLoadingPresenter<DATA> implements BaseLoadingStatus<DATA> {
     @Override
     public void offLine() {
         mBaseLoadingStatus.offLine();
-        //complete();
+        mLoginApiService.login("10082",
+                "e10adc3949ba59abbe56e057f20f883e") .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseLoadingSubscriber(this));
+        complete();
     }
 
     @Override
     public void unLogin() {
         mBaseLoadingStatus.unLogin();
-        //complete();
+        complete();
     }
 }

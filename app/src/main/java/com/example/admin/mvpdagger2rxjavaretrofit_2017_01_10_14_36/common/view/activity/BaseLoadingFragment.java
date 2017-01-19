@@ -102,14 +102,14 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
 
     @Override
     public void loadData() {
-        startLoad();
+//        startLoad();
         mLoadingLayout.loadData();
         getPresenter().loadData();
     }
 
     @Override
     public void startLoad() {
-        loading();
+//        loading();
         mLoadingLayout.startLoad();
         //getPresenter().startLoad();
     }
@@ -124,28 +124,28 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
     public void success(T data) {
         mLoadingLayout.success(data);
         //getPresenter().success(data);
-        complete();
+//        complete();
     }
 
     @Override
     public void empty() {
         mLoadingLayout.empty();
         //getPresenter().empty();
-        complete();
+//        complete();
     }
 
     @Override
     public void failure(int code, String msg) {
         mLoadingLayout.failure(code, msg);
         //getPresenter().failure(code, msg);
-        complete();
+//        complete();
     }
 
     @Override
     public void error(String msg) {
         mLoadingLayout.error(msg);
         //getPresenter().error(msg);
-        complete();
+//        complete();
     }
 
     @Override

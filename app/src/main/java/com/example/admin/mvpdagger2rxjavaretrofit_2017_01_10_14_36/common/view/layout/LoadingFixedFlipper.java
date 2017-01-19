@@ -27,6 +27,7 @@ public class LoadingFixedFlipper<T> extends FixedFlipper implements BaseLoadingS
     int ERROR = 1;
     int EMPTY = 2;
     int LOADING = 3;
+    int OFFLINE = 4;
 
     public LoadingFixedFlipper(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -118,7 +119,7 @@ public class LoadingFixedFlipper<T> extends FixedFlipper implements BaseLoadingS
 
     @Override
     public void offLine() {
-
+        setDisplayedChild(OFFLINE);
     }
 
     @Override

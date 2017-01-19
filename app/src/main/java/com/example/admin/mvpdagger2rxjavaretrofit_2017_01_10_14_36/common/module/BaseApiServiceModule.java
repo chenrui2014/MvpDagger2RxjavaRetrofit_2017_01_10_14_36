@@ -1,6 +1,7 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.module;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.data.BaseApiService;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.data.LoginApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -116,11 +117,11 @@ public static final String API_SERVER_URL = "http://192.168.1.10";
         return build.create(BaseApiService.class);
     }
 
-//    @Provides
-//    @Singleton
-//    protected LoginApiService provideLoginService(Retrofit build) {
-//        return build.create(LoginApiService.class);
-//    }
+    @Provides
+    @Singleton
+    protected LoginApiService provideLoginService(Retrofit build) {
+        return build.create(LoginApiService.class);
+    }
 
 //    @Provides
 //    @Singleton

@@ -1,7 +1,11 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx;
 
+import android.util.Log;
+
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean.BaseLoadingResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
+
+import retrofit2.adapter.rxjava.HttpException;
 
 /**
  * 描述说明  <br/>
@@ -27,7 +31,33 @@ public class BaseLoadingSubscriber<T extends BaseLoadingResult> extends BaseSubs
 
     @Override
     public void onError(Throwable e) {
-        mBaseLoadingStatus.error(e.getMessage());
+        if (e instanceof HttpException) {
+            HttpException httpException = (HttpException) e;
+            //httpException.response().errorBody().string()
+            int code = httpException.code();
+            String msg = httpException.getMessage();
+            Log.d("  ", "code=" + code);
+            if (code == 504) {
+                msg = "网络不给力";
+            }
+            if (code == 502 || code == 404) {
+                msg = "服务器异常，请稍后再试";
+            }
+            if (code == 401) {
+                //掉线了,需要重新登录
+                mBaseLoadingStatus.offLine();
+            }
+            mBaseLoadingStatus.failure(code, msg);
+        } else {
+//            failure(0, e.getMessage());
+            mBaseLoadingStatus.error(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override

@@ -91,6 +91,27 @@
             android:text="正在加载" />
     </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/load_offline_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/data_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="掉线了。。。" />
+
+        </LinearLayout>
+
     </com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.LoadingFixedFlipper>
 
 </com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.layout.LoadingLayout>

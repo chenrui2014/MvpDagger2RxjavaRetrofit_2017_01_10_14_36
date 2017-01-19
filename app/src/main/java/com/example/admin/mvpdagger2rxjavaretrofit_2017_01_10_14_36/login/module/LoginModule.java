@@ -3,12 +3,9 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.module
 import android.util.Log;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.emailService.EmailApiService;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.data.LoginApiService;
 
 import javax.inject.Inject;
-
-import rx.Observable;
 
 /**
  * 描述说明  <br/>
@@ -46,8 +43,8 @@ public class LoginModule {
 
 //       Log.e(" Application "," Application " + mApplication);
 
-       Observable<LoginResult> loginResultObservable = mLoginApiService.login("admin",
-               "21232f297a57a5a743894a0e4a801fc3");
+//       Observable<LoginResult> loginResultObservable = mLoginApiService.login("admin",
+//               "21232f297a57a5a743894a0e4a801fc3");
 
 //       loginResultObservable.subscribeOn(Schedulers.io())
 //               .observeOn(AndroidSchedulers.mainThread())
