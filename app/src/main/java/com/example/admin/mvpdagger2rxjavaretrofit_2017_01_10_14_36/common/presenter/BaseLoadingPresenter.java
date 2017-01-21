@@ -1,8 +1,9 @@
 package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter;
 
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx.BaseLoadingSubscriber;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
 
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -77,11 +78,28 @@ public class BaseLoadingPresenter<DATA> extends BasePresenter implements BaseLoa
     @Override
     public void offLine() {
         mBaseLoadingStatus.offLine();
+        complete();
         mLoginApiService.login("10082",
                 "e10adc3949ba59abbe56e057f20f883e") .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseLoadingSubscriber(this));
-        complete();
+//                .subscribe(new BaseLoadingSubscriber(this))
+                .subscribe(new Subscriber<LoginResult>() {
+                    @Override
+                    public void onCompleted() {
+                        complete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        error(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(LoginResult loginResult) {
+                        reLoad();//登录成功重新加载。
+                    }
+                })
+        ;
     }
 
     @Override

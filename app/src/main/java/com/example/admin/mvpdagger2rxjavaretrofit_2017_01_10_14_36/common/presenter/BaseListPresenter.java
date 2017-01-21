@@ -2,6 +2,7 @@ package com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.prese
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseListStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean.EmailList;
 
 import java.util.List;
 
@@ -17,8 +18,10 @@ import java.util.List;
 public class BaseListPresenter<ITEM, DATA>
         extends BaseLoadingPresenter<DATA> implements BaseListStatus<ITEM>{
 
-    public BaseListPresenter(BaseLoadingStatus<DATA> baseLoadingStatus) {
+    BaseListStatus<EmailList> mBaseListStatus;
+    public BaseListPresenter(BaseListStatus<EmailList> baseListStatus, BaseLoadingStatus<DATA> baseLoadingStatus) {
         super(baseLoadingStatus);
+        mBaseListStatus = baseListStatus;
     }
 
     @Override

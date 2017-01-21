@@ -20,6 +20,7 @@
         </activity>
 
         <activity android:name=".emial.view.EmailActivity"/>
+        <activity android:name=".emial.view.EmailActivity2"/>
     </application>
 
 </manifest>

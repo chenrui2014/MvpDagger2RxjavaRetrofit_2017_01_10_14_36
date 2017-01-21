@@ -102,9 +102,8 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
 
     @Override
     public void loadData() {
-//        startLoad();
+        startLoad();
         mLoadingLayout.loadData();
-        getPresenter().loadData();
     }
 
     @Override
@@ -160,7 +159,7 @@ public abstract class BaseLoadingFragment<T extends BaseLoadingResult,
         mLoadingLayout.reLoad();
         //getPresenter().reLoad();
 //        startLoad();
-        loadData();
+        getPresenter().loadData();
     }
 
     @Override

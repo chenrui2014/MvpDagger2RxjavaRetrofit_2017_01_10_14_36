@@ -20,6 +20,7 @@ import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.a
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseLoadingFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseTabFragment3;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.view.EmailActivity;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.view.EmailActivity2;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.bean.LoginResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.login.presenter.LoginPresenter;
 
@@ -131,6 +132,9 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.menu_more:
                 startActivity(new Intent(this, EmailActivity.class));
+                break;
+            case R.id.menu_more2:
+                startActivity(new Intent(this, EmailActivity2.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

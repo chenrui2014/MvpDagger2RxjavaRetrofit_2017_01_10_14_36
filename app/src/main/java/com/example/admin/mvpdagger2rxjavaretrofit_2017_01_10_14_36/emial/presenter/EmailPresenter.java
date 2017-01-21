@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseListPresenter;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.rx.BaseLoadingSubscriber;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseListStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.status.BaseLoadingStatus;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean.EmailList;
@@ -37,8 +38,8 @@ public class EmailPresenter extends BaseListPresenter<EmailList, EmailListBean> 
         @Inject
     protected EmailApiService mMailApiService;
 
-    public EmailPresenter(BaseLoadingStatus<EmailListBean> baseLoadingStatus) {
-        super(baseLoadingStatus);
+    public EmailPresenter(BaseListStatus<EmailList> baseListStatus, BaseLoadingStatus<EmailListBean> baseLoadingStatus) {
+        super(baseListStatus, baseLoadingStatus);
 //        mEmailStatus = emailStatus;
         DaggerEmailApiComponent.builder().build().inject(this);
     }

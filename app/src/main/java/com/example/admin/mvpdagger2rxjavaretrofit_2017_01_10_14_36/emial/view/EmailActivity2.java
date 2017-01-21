@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseActivity;
-import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseStickListFragment;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseListFragment;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.bean.EmailListBean.EmailList;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.emial.presenter.EmailPresenter;
@@ -32,14 +31,14 @@ import butterknife.ButterKnife;
  * Email : 1005949566@qq.com <br/>
  * Version 1.0
  */
-public class EmailActivity extends BaseActivity {
+public class EmailActivity2 extends BaseActivity {
     @Override
     public Fragment getFragment() {
         return EmailFragment.newInstance();
     }
 
     public static class EmailFragment extends
-            BaseStickListFragment<EmailList, EmailListBean, EmailPresenter, EmailViewMyHolder2>
+            BaseListFragment<EmailList, EmailListBean, EmailPresenter, EmailViewMyHolder2>
             implements EmailStatus<EmailListBean> {
 
         public static EmailFragment newInstance() {
@@ -67,19 +66,6 @@ public class EmailActivity extends BaseActivity {
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getPresenter().loadData();
-        }
-
-        @Override
-        protected long initStickHeaderId(int position, EmailList emailList) {
-            String[] split = emailList.getRecvTime().split(" ");
-            int i = split[0].hashCode();
-            Log.e(" dedao i ", " dedao i " + i);
-            return i;
-        }
-
-        @Override
-        protected void bindStickHeardViewHolder(TextView tvHeard, EmailList emailList, int position) {
-            tvHeard.setText(emailList.getRecvTime());
         }
 
         @Override
