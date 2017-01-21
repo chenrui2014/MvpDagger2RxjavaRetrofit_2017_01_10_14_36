@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseActivity;
@@ -122,6 +123,11 @@ public class EmailActivity2 extends BaseActivity {
 
         }
 
+        @Override
+        public void onItemClickListener(EmailList emailList) {
+            super.onItemClickListener(emailList);
+            Toast.makeText(this.getContext(), emailList.getTitle(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static class EmailViewMyHolder2 extends ViewHolder {

@@ -258,7 +258,9 @@ public class RecyclerViewPlus<DATA extends BaseListResult<ITEM>, ITEM> extends R
                 } else if (baseHFAdapter.isFooterViewPos(vh.getPosition())) {
 
                 } else {
-                    mOnRecyclerViewItemLongClickListener.onItemLongClick(vh.getPosition());
+                    if (mOnRecyclerViewItemClickListener != null) {
+                        mOnRecyclerViewItemClickListener.onItemClick(vh.getPosition());
+                    }
                 }
             }
 
@@ -270,8 +272,8 @@ public class RecyclerViewPlus<DATA extends BaseListResult<ITEM>, ITEM> extends R
                 } else if (baseHFAdapter.isFooterViewPos(vh.getPosition())) {
 
                 } else {
-                    if (mOnRecyclerViewItemClickListener != null) {
-                        mOnRecyclerViewItemClickListener.onItemClick(vh.getPosition());
+                    if (mOnRecyclerViewItemLongClickListener != null) {
+                        mOnRecyclerViewItemLongClickListener.onItemLongClick(vh.getPosition());
                     }
                 }
             }

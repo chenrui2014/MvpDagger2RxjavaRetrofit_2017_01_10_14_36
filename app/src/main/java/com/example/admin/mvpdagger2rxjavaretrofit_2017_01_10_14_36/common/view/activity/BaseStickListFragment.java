@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.bean.BaseListResult;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.presenter.BaseListPresenter;
+import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.adapter.BaseHFAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 /**
  * 描述说明  <br/>
@@ -44,25 +43,12 @@ public abstract class BaseStickListFragment<ITEM, DATA extends BaseListResult<IT
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mStickAdapter = new StickAdapter();
+        mStickAdapter = new StickAdapter(new BaseListAdapter2());
 
         super.onCreate(savedInstanceState);
-
+//        getRcv().initRecyclerView(this.getContext(), mStickAdapter);
         final StickyRecyclerHeadersDecoration decor = new StickyRecyclerHeadersDecoration(mStickAdapter);
         getRcv().addItemDecoration(decor);
-
-        //添加头部点击监听
-        StickyRecyclerHeadersTouchListener touchListener =
-                new StickyRecyclerHeadersTouchListener(getRcv(), decor);
-        touchListener.setOnHeaderClickListener(
-                new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
-                    @Override
-                    public void onHeaderClick(View header, int position, long headerId) {
-                        Toast.makeText(BaseStickListFragment.this.getContext(), "Header position: " + position + ", id: " + headerId,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-        getRcv().addOnItemTouchListener(touchListener);
 
         //添加头部刷新
         mStickAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -71,20 +57,39 @@ public abstract class BaseStickListFragment<ITEM, DATA extends BaseListResult<IT
                 decor.invalidateHeaders();
             }
         });
+
+//        //添加头部点击监听
+//        StickyRecyclerHeadersTouchListener touchListener =
+//                new StickyRecyclerHeadersTouchListener(getRcv(), decor);
+//        touchListener.setOnHeaderClickListener(
+//                new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
+//                    @Override
+//                    public void onHeaderClick(View header, int position, long headerId) {
+//                        Toast.makeText(BaseStickListFragment.this.getContext(), "Header position: " + position + ", id: " + headerId,
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//        getRcv().addOnItemTouchListener(touchListener);
+
     }
 
     protected abstract long initStickHeaderId(int position, ITEM item);
     protected abstract void bindStickHeardViewHolder(TextView tvHeard, ITEM item, int position);
 
     public class StickAdapter
-            extends BaseListAdapter2
+            extends BaseHFAdapter
             implements StickyRecyclerHeadersAdapter<HeardHolderItem> {
+
+        public StickAdapter(Adapter adapter) {
+            super(adapter);
+        }
 
         @Override
         public long getHeaderId(int position) {
             ITEM item = null;
             if (getBaseList() != null && getBaseList().size() > 0) {
                 item = getBaseList().get(position);
+                Log.e(" getHeaderId111111 ", " getHeaderId111111 " + position);
             } else {
                 Log.e(" getHeaderId ", " getHeaderId " + position);
             }
@@ -102,6 +107,7 @@ public abstract class BaseStickListFragment<ITEM, DATA extends BaseListResult<IT
         public void onBindHeaderViewHolder(HeardHolderItem holder, int position) {
             if (getBaseList() != null && getBaseList().size() > 0) {
                 bindStickHeardViewHolder(((HeardHolderItem) holder).tvProgress, getBaseList().get(position), position);
+                Log.e("  HeaderViewHolder111 ", " onBindHeaderViewHolder11 " + position);
             } else {
                 Log.e("  HeaderViewHolder ", " onBindHeaderViewHolder " + position);
             }
@@ -122,9 +128,9 @@ public abstract class BaseStickListFragment<ITEM, DATA extends BaseListResult<IT
         }
     }
 
-    @Override
-    protected void setRecyclerViewAdapter(Adapter adapter) {
-        super.setRecyclerViewAdapter(mStickAdapter);
-    }
+//    @Override
+//    protected void setRecyclerViewAdapter(Adapter adapter) {
+//        super.setRecyclerViewAdapter(mStickAdapter);
+//    }
 
 }

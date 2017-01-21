@@ -40,7 +40,7 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
 
     private RecyclerViewPlus<DATA, ITEM> mRcv;
 
-    public RecyclerView getRcv() {
+    public RecyclerViewPlus getRcv() {
         return mRcv;
     }
 

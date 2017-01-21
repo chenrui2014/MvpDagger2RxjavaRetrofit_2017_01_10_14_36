@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.R;
 import com.example.admin.mvpdagger2rxjavaretrofit_2017_01_10_14_36.common.view.activity.BaseActivity;
@@ -73,13 +74,15 @@ public class EmailActivity extends BaseActivity {
         protected long initStickHeaderId(int position, EmailList emailList) {
             String[] split = emailList.getRecvTime().split(" ");
             int i = split[0].hashCode();
+            Log.e(" dedao "," dedao " + split[0]);
             Log.e(" dedao i ", " dedao i " + i);
+            i = Math.abs(i);
             return i;
         }
 
         @Override
         protected void bindStickHeardViewHolder(TextView tvHeard, EmailList emailList, int position) {
-            tvHeard.setText(emailList.getRecvTime());
+            tvHeard.setText(emailList.getRecvTime().split(" ")[0]);
         }
 
         @Override
@@ -136,6 +139,11 @@ public class EmailActivity extends BaseActivity {
 
         }
 
+        @Override
+        public void onItemClickListener(EmailList emailList) {
+            super.onItemClickListener(emailList);
+            Toast.makeText(this.getContext(), emailList.getTitle(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static class EmailViewMyHolder2 extends ViewHolder {
