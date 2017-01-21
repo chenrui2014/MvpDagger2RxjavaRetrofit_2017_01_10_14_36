@@ -118,8 +118,13 @@ public class RecyclerViewPlus<DATA extends BaseListResult<ITEM>, ITEM> extends R
 
     public void initRecyclerView(Context context, BaseHFAdapter baseHFAdapter) {
         mBaseHFAdapter = baseHFAdapter;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        setRecyclerViewManager(linearLayoutManager);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+//        setRecyclerViewManager(linearLayoutManager);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
+//        setRecyclerViewManager(gridLayoutManager);
+        StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        setRecyclerViewManager(staggeredGridLayoutManager);
         setHasFixedSize(true);
 //        BaseHFAdapter baseHFAdapter = new BaseHFAdapter(new BaseListAdapter2());//能够添加头部尾部的适配器
         addFootView(context, baseHFAdapter);//添加尾部。

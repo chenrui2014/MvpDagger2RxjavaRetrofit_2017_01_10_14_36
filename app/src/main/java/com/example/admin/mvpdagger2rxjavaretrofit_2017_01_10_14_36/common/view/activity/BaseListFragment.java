@@ -78,7 +78,8 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setBaseHFAdapter(new BaseHFAdapter(new BaseListAdapter2()));
+        BaseHFAdapter baseHFAdapter = new BaseHFAdapter(new BaseListAdapter2());
+        setBaseHFAdapter(baseHFAdapter);
         mRcv.initRecyclerView(this.getContext(), getBaseHFAdapter());
         mRcv.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
 
