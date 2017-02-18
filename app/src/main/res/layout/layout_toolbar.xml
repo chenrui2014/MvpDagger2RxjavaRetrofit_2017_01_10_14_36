@@ -24,7 +24,11 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:contentInsetStartWithNavigation="0dp"
+                app:contentInsetStart="0dp"
+                android:layout_marginLeft="-8dp"
+                android:layout_marginRight="-8dp"/>
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
