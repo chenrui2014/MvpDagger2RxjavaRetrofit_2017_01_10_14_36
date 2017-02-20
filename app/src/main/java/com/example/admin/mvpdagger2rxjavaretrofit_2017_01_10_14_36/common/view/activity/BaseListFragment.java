@@ -70,16 +70,10 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.layout_recycler_list, container, false);
 //        mRcv = (RecyclerView) view.findViewById(R.id.rcv);
-        mRcv = new RecyclerViewPlus(this.getContext());
-        return super.onCreateView(inflater, mRcv, savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
         BaseHFAdapter baseHFAdapter = new BaseHFAdapter(new BaseListAdapter2());
         setBaseHFAdapter(baseHFAdapter);
+        mRcv = new RecyclerViewPlus(this.getContext());
         mRcv.initRecyclerView(this.getContext(), getBaseHFAdapter());
         mRcv.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
 
@@ -103,6 +97,12 @@ public abstract class BaseListFragment<ITEM, DATA extends BaseListResult<ITEM>
             }
         });
 //        RecyclerViewUtil.bindBaseListFragment(this);
+        return super.onCreateView(inflater, mRcv, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     public void onItemClickListener(ITEM item) {
