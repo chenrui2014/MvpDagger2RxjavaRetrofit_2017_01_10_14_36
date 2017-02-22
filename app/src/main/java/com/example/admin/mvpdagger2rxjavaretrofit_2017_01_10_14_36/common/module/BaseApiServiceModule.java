@@ -31,7 +31,8 @@ public class BaseApiServiceModule {
 
 //    public static final String API_SERVER_URL = "http://192.168.1.34:5555";
 //public static final String API_SERVER_URL = "http://192.168.1.31:85";
-public static final String API_SERVER_URL = "http://192.168.1.10";
+//public static final String API_SERVER_URL = "http://192.168.1.10";
+public static final String API_SERVER_URL = "http://oa.isoffice.cn/";
 
     private OkHttpClient.Builder mBuilder;
     private static final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();

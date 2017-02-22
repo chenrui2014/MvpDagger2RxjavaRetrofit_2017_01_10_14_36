@@ -45,14 +45,16 @@ public class LoginPresenter extends BaseLoadingPresenter<LoginResult> {
     }
 
     public void login() {
-        Log.e(" logi s333333333 "," loginapi333333 " + mLoginApiService);
+        Log.e(" logi s333333333 ", " loginapi333333 " + mLoginApiService);
 
 //        Log.e(" Applicati333333 "," Applicat33333 " + mMailApiService);
 
 //        Observable<LoginResult> loginResultObservable = mLoginApiService.login("admin",
 //                "21232f297a57a5a743894a0e4a801fc3");
-        Observable<LoginResult> loginResultObservable = mLoginApiService.login("10082",
-                "e10adc3949ba59abbe56e057f20f883e");
+//        Observable<LoginResult> loginResultObservable = mLoginApiService.login("10082",
+//                "e10adc3949ba59abbe56e057f20f883e");
+        Observable<LoginResult> loginResultObservable = mLoginApiService.login("test",
+                "0d9cf7b961c7612a5296ee215ce3ec2b");
         loginResultObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -79,8 +79,10 @@ public class BaseLoadingPresenter<DATA> extends BasePresenter implements BaseLoa
     public void offLine() {
         mBaseLoadingStatus.offLine();
         complete();
-        mLoginApiService.login("10082",
-                "e10adc3949ba59abbe56e057f20f883e") .subscribeOn(Schedulers.io())
+//        mLoginApiService.login("10082",
+//                "e10adc3949ba59abbe56e057f20f883e") .subscribeOn(Schedulers.io())
+        mLoginApiService.login("test",
+                "0d9cf7b961c7612a5296ee215ce3ec2b") .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new BaseLoadingSubscriber(this))
                 .subscribe(new Subscriber<LoginResult>() {
