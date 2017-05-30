@@ -18,8 +18,8 @@ import java.util.List;
 public class BaseListPresenter<ITEM, DATA>
         extends BaseLoadingPresenter<DATA> implements BaseListStatus<ITEM>{
 
-    BaseListStatus<EmailList> mBaseListStatus;
-    public BaseListPresenter(BaseListStatus<EmailList> baseListStatus, BaseLoadingStatus<DATA> baseLoadingStatus) {
+    BaseListStatus<ITEM> mBaseListStatus;
+    public BaseListPresenter(BaseListStatus<ITEM> baseListStatus, BaseLoadingStatus<DATA> baseLoadingStatus) {
         super(baseLoadingStatus);
         mBaseListStatus = baseListStatus;
     }

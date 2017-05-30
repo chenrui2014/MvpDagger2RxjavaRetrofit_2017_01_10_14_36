@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mvp+Dagger2+Rxjava+Retrofit_2017_01_10_14_36.iml" filepath="$PROJECT_DIR$/Mvp+Dagger2+Rxjava+Retrofit_2017_01_10_14_36.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MvpDagger2RxjavaRetrofit_2017_01_10_14_36.iml" filepath="$PROJECT_DIR$/MvpDagger2RxjavaRetrofit_2017_01_10_14_36.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

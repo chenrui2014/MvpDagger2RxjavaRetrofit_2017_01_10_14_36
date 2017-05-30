@@ -43,18 +43,21 @@ public class BaseToolbarFragment extends BaseFragment {
         LinearLayout llContainer = (LinearLayout) toolbarLayout.findViewById(R.id.toolbar_content);
         llContainer.addView(container);
         mToolbar = (Toolbar) toolbarLayout.findViewById(R.id.toolbar);
-        mToolbar.setNavigationOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(mToolbar);
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+        mToolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
         return (ViewGroup) toolbarLayout;
     }
 
